@@ -31,12 +31,6 @@ public class OrderRepository {
         return currentSessionOrders;
     }
 
-    public List<Order> getOrdersByUserName(String userName) throws UserNotFoundException {
-        return userRepository.get(userName).orElseThrow(
-                () -> new UserNotFoundException(String.format("User '%s' not found", userName)))
-                .getOrders();
-    }
-
     public void clear() {
         currentSessionOrders.clear();
     }
