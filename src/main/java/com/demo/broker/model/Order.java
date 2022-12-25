@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.StringJoiner;
 
 public class Order {
-    private User user;
+    private String userName;
     private Operation operation;
     private Instrument instrument;
     private int quantity;
@@ -18,12 +18,12 @@ public class Order {
     public Order() {
     }
 
-    public User getUser() {
-        return user;
+    public String getUserName() {
+        return userName;
     }
 
-    public Order setUser(User user) {
-        this.user = user;
+    public Order setUserName(String userName) {
+        this.userName = userName;
         return this;
     }
 
@@ -93,6 +93,7 @@ public class Order {
     @Override
     public String toString() {
         return new StringJoiner(", ", Order.class.getSimpleName() + "[", "]")
+                .add("userName='" + userName + "'")
                 .add("operation=" + operation)
                 .add("instrument=" + instrument)
                 .add("quantity=" + quantity)
