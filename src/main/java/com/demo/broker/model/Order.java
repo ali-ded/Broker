@@ -2,20 +2,34 @@ package com.demo.broker.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
 public class Order {
     private String userName;
-    private Operation operation;
-    private Instrument instrument;
-    private int quantity;
-    private BigDecimal price;
-    private LocalDateTime activeUntil;
+    private final Operation operation;
+    private final Instrument instrument;
+    private final int quantity;
+    private int quantityRemainder;
+    private final BigDecimal price;
+    private final LocalDateTime activeUntil;
     private boolean isActive;
-    private List<Order> agreements;
+    private final List<Order> agreements;
 
-    public Order() {
+    public Order(Operation operation,
+                 Instrument instrument,
+                 int quantity,
+                 BigDecimal price,
+                 LocalDateTime activeUntil) {
+        this.operation = operation;
+        this.instrument = instrument;
+        this.quantity = quantity;
+        this.quantityRemainder = quantity;
+        this.price = price;
+        this.activeUntil = activeUntil;
+        agreements = new ArrayList<>();
+        isActive = true;
     }
 
     public String getUserName() {
@@ -31,63 +45,48 @@ public class Order {
         return operation;
     }
 
-    public Order setOperation(Operation operation) {
-        this.operation = operation;
-        return this;
-    }
-
     public Instrument getInstrument() {
         return instrument;
-    }
-
-    public Order setInstrument(Instrument instrument) {
-        this.instrument = instrument;
-        return this;
     }
 
     public int getQuantity() {
         return quantity;
     }
 
-    public Order setQuantity(int quantity) {
-        this.quantity = quantity;
-        return this;
+    public int getQuantityRemainder() {
+        return quantityRemainder;
+    }
+
+    public void addQuantity(int quantity) {
+        this.quantityRemainder += quantity;
+    }
+
+    public void subtractQuantity(int quantity) {
+        this.quantityRemainder -= quantity;
     }
 
     public BigDecimal getPrice() {
         return price;
     }
 
-    public Order setPrice(BigDecimal price) {
-        this.price = price;
-        return this;
-    }
-
     public LocalDateTime getActiveUntil() {
         return activeUntil;
-    }
-
-    public Order setActiveUntil(LocalDateTime activeUntil) {
-        this.activeUntil = activeUntil;
-        return this;
     }
 
     public boolean isActive() {
         return isActive;
     }
 
-    public Order setActive(boolean active) {
+    public void setActive(boolean active) {
         isActive = active;
-        return this;
     }
 
     public List<Order> getAgreements() {
         return agreements;
     }
 
-    public Order setAgreements(List<Order> agreements) {
-        this.agreements = agreements;
-        return this;
+    public void addAgreement(Order agreement) {
+        agreements.add(agreement);
     }
 
     @Override
@@ -97,6 +96,7 @@ public class Order {
                 .add("operation=" + operation)
                 .add("instrument=" + instrument)
                 .add("quantity=" + quantity)
+                .add("quantityRemainder=" + quantityRemainder)
                 .add("price=" + price)
                 .add("activeUntil=" + activeUntil)
                 .add("isActive=" + isActive)

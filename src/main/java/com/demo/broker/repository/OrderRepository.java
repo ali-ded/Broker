@@ -22,13 +22,19 @@ public class OrderRepository {
 
     public void add(Order order) throws UserNotFoundException {
         currentSessionOrders.add(order);
-        User user = userRepository.get(order.getUserName())
-                .orElseThrow(() -> new UserNotFoundException(String.format("User '%s' not found", order.getUserName())));
+        User user = userRepository.get(order.getUserName()).orElseThrow(
+                () -> new UserNotFoundException(String.format("Error adding new order to user %s", order.getUserName())));
         user.getOrders().add(order);
     }
 
-    public List<Order> getAll() {
+    public List<Order> getCurrentSessionOrders() {
         return currentSessionOrders;
+    }
+
+    public List<Order> getOrdersByUserName(String userName) throws UserNotFoundException {
+        return userRepository.get(userName).orElseThrow(
+                () -> new UserNotFoundException(String.format("User '%s' not found", userName)))
+                .getOrders();
     }
 
     public void clear() {

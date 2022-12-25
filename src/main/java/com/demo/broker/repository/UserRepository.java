@@ -2,7 +2,6 @@ package com.demo.broker.repository;
 
 import com.demo.broker.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
