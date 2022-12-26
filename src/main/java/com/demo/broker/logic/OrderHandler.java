@@ -28,7 +28,7 @@ public class OrderHandler {
         this.userService = userService;
     }
 
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(cron = "${order.handler.delay}")
     private void process() {
         if (orderService.isSessionActive()) {
             List<Order> orderList = orderService.getCurrentSessionOrders();
@@ -63,6 +63,7 @@ public class OrderHandler {
                     .findFirst().orElseThrow();
             formAgreement(orderBuy, orderSell);
         }
+        LOGGER.info("The purchase order has been completed");
         orderBuy.setActive(false);
     }
 
@@ -77,6 +78,7 @@ public class OrderHandler {
             orderSell.subtractQuantity(quantityToSell);
         }
         if (orderSell.getQuantityRemainder() == 0) {
+            LOGGER.info("The sales order has been completed");
             orderSell.setActive(false);
         }
         int numberOfInstruments = quantityToBuy - orderBuy.getQuantityRemainder();
@@ -92,4 +94,15 @@ public class OrderHandler {
                 orderBuy.getInstrument().name(), numberOfInstruments, orderSell.getPrice(), LocalDateTime.now()));
     }
 
+    @Scheduled(cron = "${order.check.validity.delay}")
+    public void checkValidityOfOrder() {
+        orderService.getCurrentSessionOrders().stream()
+                .filter(Order::isActive)
+                .forEach(order -> {
+                    if (LocalDateTime.now().isAfter(order.getActiveUntil())) {
+                        LOGGER.info("the order has expired");
+                        order.setActive(false);
+                    }
+                });
+    }
 }

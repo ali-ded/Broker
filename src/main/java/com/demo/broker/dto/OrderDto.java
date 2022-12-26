@@ -9,6 +9,7 @@ public class OrderDto {
     private String instrument;
     private int quantity;
     private BigDecimal price;
+    private boolean isActive;
     private List<Agreement> agreements;
 
     public String getUserName() {
@@ -49,6 +50,14 @@ public class OrderDto {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public List<Agreement> getAgreements() {
