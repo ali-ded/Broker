@@ -34,11 +34,15 @@ public class UserService {
         LOGGER.info("New user '{}' saved successfully", userDto.userName());
     }
 
-    public UserDto get(String userName) throws UserNotFoundException {
+    public UserDto getUserDto(String userName) throws UserNotFoundException {
         User user = userRepository.get(userName).orElseThrow(
                 () -> new UserNotFoundException(String.format("User '%s' not found", userName)));
         LOGGER.info("User '{}' found in the repository", userName);
         return userMapper.userToUserDto(user);
+    }
+
+    public User getUser(String userName) {
+        return userRepository.get(userName).orElseThrow();
     }
 
     public boolean isUserExists(String userName) {

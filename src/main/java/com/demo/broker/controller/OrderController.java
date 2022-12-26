@@ -3,7 +3,6 @@ package com.demo.broker.controller;
 import com.demo.broker.dto.OrderDto;
 import com.demo.broker.dto.OrderNewDto;
 import com.demo.broker.exception.UserNotFoundException;
-import com.demo.broker.model.Order;
 import com.demo.broker.service.OrderService;
 import com.demo.broker.service.UserService;
 import com.demo.broker.utils.ErrorConverter;
@@ -84,6 +83,5 @@ public class OrderController {
             LOGGER.warn("GET /api/order/get-orders-current-session {}", HttpStatus.UNAUTHORIZED);
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-
     }
 }

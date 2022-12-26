@@ -8,4 +8,5 @@ import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
 
 public record UserNewDto(@NotBlank String userName,
-                         @Digits(integer = 12, fraction = 2) @Positive @NotNull BigDecimal amount) {}
+                         @Digits(integer = 12, fraction = 2) @Positive @NotNull BigDecimal amount) {
+}

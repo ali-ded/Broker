@@ -74,7 +74,7 @@ public class UserController {
         String userName = (String) httpSession.getAttribute("user");
         UserDto userDto;
         try {
-            userDto = userService.get(userName);
+            userDto = userService.getUserDto(userName);
             LOGGER.info("GET /api/user/get-user-info {}", HttpStatus.OK);
             return ResponseEntity.ok(userDto);
         } catch (UserNotFoundException e) {

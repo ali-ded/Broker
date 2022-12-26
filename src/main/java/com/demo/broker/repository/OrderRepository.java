@@ -6,8 +6,8 @@ import com.demo.broker.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Repository
 public class OrderRepository {
@@ -17,7 +17,7 @@ public class OrderRepository {
 
     @Autowired
     public OrderRepository(UserRepository userRepository) {
-        currentSessionOrders = new ArrayList<>();
+        currentSessionOrders = new CopyOnWriteArrayList<>();
         this.userRepository = userRepository;
     }
 

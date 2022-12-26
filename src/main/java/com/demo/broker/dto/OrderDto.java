@@ -1,7 +1,5 @@
 package com.demo.broker.dto;
 
-import com.demo.broker.model.Order;
-
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -11,8 +9,7 @@ public class OrderDto {
     private String instrument;
     private int quantity;
     private BigDecimal price;
-    private boolean isActive;
-    private List<Order> agreements;
+    private List<Agreement> agreements;
 
     public String getUserName() {
         return userName;
@@ -54,19 +51,11 @@ public class OrderDto {
         this.price = price;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public List<Order> getAgreements() {
+    public List<Agreement> getAgreements() {
         return agreements;
     }
 
-    public void setAgreements(List<Order> agreements) {
+    public void setAgreements(List<Agreement> agreements) {
         this.agreements = agreements;
     }
 }

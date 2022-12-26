@@ -1,10 +1,11 @@
 package com.demo.broker.model;
 
+import com.demo.broker.dto.Agreement;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.StringJoiner;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Order {
     private String userName;
@@ -15,7 +16,7 @@ public class Order {
     private final BigDecimal price;
     private final LocalDateTime activeUntil;
     private boolean isActive;
-    private final List<Order> agreements;
+    private final List<Agreement> agreements;
 
     public Order(Operation operation,
                  Instrument instrument,
@@ -28,7 +29,7 @@ public class Order {
         this.quantityRemainder = quantity;
         this.price = price;
         this.activeUntil = activeUntil;
-        agreements = new ArrayList<>();
+        agreements = new CopyOnWriteArrayList<>();
         isActive = true;
     }
 
@@ -57,10 +58,6 @@ public class Order {
         return quantityRemainder;
     }
 
-    public void addQuantity(int quantity) {
-        this.quantityRemainder += quantity;
-    }
-
     public void subtractQuantity(int quantity) {
         this.quantityRemainder -= quantity;
     }
@@ -81,27 +78,12 @@ public class Order {
         isActive = active;
     }
 
-    public List<Order> getAgreements() {
+    public List<Agreement> getAgreements() {
         return agreements;
     }
 
-    public void addAgreement(Order agreement) {
+    public void addAgreement(Agreement agreement) {
         agreements.add(agreement);
-    }
-
-    @Override
-    public String toString() {
-        return new StringJoiner(", ", Order.class.getSimpleName() + "[", "]")
-                .add("userName='" + userName + "'")
-                .add("operation=" + operation)
-                .add("instrument=" + instrument)
-                .add("quantity=" + quantity)
-                .add("quantityRemainder=" + quantityRemainder)
-                .add("price=" + price)
-                .add("activeUntil=" + activeUntil)
-                .add("isActive=" + isActive)
-                .add("agreements=" + agreements)
-                .toString();
     }
 
     public enum Operation {

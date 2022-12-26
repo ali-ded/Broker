@@ -1,9 +1,9 @@
 package com.demo.broker.model;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class User {
     private BigDecimal amount;
@@ -11,14 +11,14 @@ public class User {
 
     public User(BigDecimal amount) {
         this.amount = amount;
-        orders = new ArrayList<>();
+        orders = new CopyOnWriteArrayList<>();
     }
 
-    public void add(BigDecimal amount) {
+    public void addAmount(BigDecimal amount) {
         this.amount = this.amount.add(amount);
     }
 
-    public void subtract(BigDecimal amount) {
+    public void subtractAmount(BigDecimal amount) {
         this.amount = this.amount.subtract(amount);
     }
 

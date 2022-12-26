@@ -33,16 +33,13 @@ public class OrderService {
     }
 
     public List<Order> getCurrentSessionOrders() {
-        List<Order> orderList = orderRepository.getCurrentSessionOrders();
-        LOGGER.info("List of current session orders successfully received");
-        return orderList;
+        return orderRepository.getCurrentSessionOrders();
     }
 
     public List<OrderDto> getCurrentSessionOrdersDto() {
         List<Order> orderList = orderRepository.getCurrentSessionOrders();
         LOGGER.info("List of current session orders successfully received");
-        return orderList.stream()
-                .map(orderMapper::orderToOrderDto).toList();
+        return orderMapper.orderListToOrderDtoList(orderList);
     }
 
 
