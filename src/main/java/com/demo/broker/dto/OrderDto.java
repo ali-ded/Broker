@@ -6,12 +6,21 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class OrderDto {
+    private String userName;
     private String operation;
     private String instrument;
     private int quantity;
     private BigDecimal price;
     private boolean isActive;
     private List<Order> agreements;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getOperation() {
         return operation;

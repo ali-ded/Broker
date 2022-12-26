@@ -1,5 +1,6 @@
 package com.demo.broker.controller;
 
+import com.demo.broker.dto.OrderDto;
 import com.demo.broker.dto.OrderNewDto;
 import com.demo.broker.exception.UserNotFoundException;
 import com.demo.broker.model.Order;
@@ -50,19 +51,13 @@ public class OrderController {
             return ResponseEntity.badRequest().body(
                     errorConverter.convertFieldErrorListToMap(bindingResult.getFieldErrors()));
         }
-        if (orderService.isSessionActive()) {
-            try {
-                orderService.add(orderDto, userName);
-                LOGGER.info("POST /api/order/add {}", HttpStatus.OK);
-                return ResponseEntity.ok().build();
-            } catch (UserNotFoundException e) {
-                LOGGER.warn("POST /api/order/add {}", HttpStatus.NOT_FOUND);
-                return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-            }
-        } else {
-            LOGGER.warn("POST /api/order/add {}", HttpStatus.FORBIDDEN);
-            return new ResponseEntity<>("The trading session has not yet started",
-                    HttpStatus.FORBIDDEN);
+        try {
+            orderService.add(orderDto, userName);
+            LOGGER.info("POST /api/order/add {}", HttpStatus.OK);
+            return ResponseEntity.ok().build();
+        } catch (UserNotFoundException e) {
+            LOGGER.warn("POST /api/order/add {}", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -82,7 +77,7 @@ public class OrderController {
     @GetMapping("/get-orders-current-session")
     public ResponseEntity<?> getOrdersCurrentSession(HttpSession httpSession) {
         if ("admin".equals(httpSession.getAttribute("user"))) {
-            List<Order> currentSessionOrders = orderService.getCurrentSessionOrders();
+            List<OrderDto> currentSessionOrders = orderService.getCurrentSessionOrdersDto();
             LOGGER.info("GET /api/order/get-orders-current-session {}", HttpStatus.OK);
             return ResponseEntity.ok(currentSessionOrders);
         } else {

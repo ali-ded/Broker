@@ -1,5 +1,6 @@
 package com.demo.broker.service;
 
+import com.demo.broker.dto.OrderDto;
 import com.demo.broker.dto.OrderNewDto;
 import com.demo.broker.exception.UserNotFoundException;
 import com.demo.broker.mapper.OrderMapper;
@@ -36,6 +37,14 @@ public class OrderService {
         LOGGER.info("List of current session orders successfully received");
         return orderList;
     }
+
+    public List<OrderDto> getCurrentSessionOrdersDto() {
+        List<Order> orderList = orderRepository.getCurrentSessionOrders();
+        LOGGER.info("List of current session orders successfully received");
+        return orderList.stream()
+                .map(orderMapper::orderToOrderDto).toList();
+    }
+
 
     public void setActiveSession(boolean isSessionActive) {
         orderRepository.setActiveSession(isSessionActive);
