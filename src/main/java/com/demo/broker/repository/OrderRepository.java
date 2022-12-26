@@ -13,6 +13,7 @@ import java.util.List;
 public class OrderRepository {
     private final List<Order> currentSessionOrders;
     private final UserRepository userRepository;
+    private boolean isSessionActive = false;
 
     @Autowired
     public OrderRepository(UserRepository userRepository) {
@@ -21,10 +22,10 @@ public class OrderRepository {
     }
 
     public void add(Order order) throws UserNotFoundException {
-        currentSessionOrders.add(order);
         User user = userRepository.get(order.getUserName()).orElseThrow(
                 () -> new UserNotFoundException(String.format("Error adding new order to user %s", order.getUserName())));
         user.getOrders().add(order);
+        currentSessionOrders.add(order);
     }
 
     public List<Order> getCurrentSessionOrders() {
@@ -33,5 +34,13 @@ public class OrderRepository {
 
     public void clear() {
         currentSessionOrders.clear();
+    }
+
+    public void setActiveSession(boolean isSessionActive) {
+        this.isSessionActive = isSessionActive;
+    }
+
+    public boolean isSessionActive() {
+        return isSessionActive;
     }
 }

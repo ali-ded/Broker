@@ -25,4 +25,8 @@ public class UserRepository {
     public Optional<User> get(String userName) {
         return Optional.ofNullable(userMap.get(userName));
     }
+
+    public boolean isUserExists(String userName) {
+        return userMap.containsKey(userName);
+    }
 }
